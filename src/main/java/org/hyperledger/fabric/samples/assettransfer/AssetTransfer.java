@@ -258,11 +258,13 @@ public final class AssetTransfer implements ContractInterface {
 
         Asset asset = genson.deserialize(assetJSON, Asset.class);
 
-        String duplicateAssetID = assetID + "-";
+        String duplicateAssetID = assetID + "Copy";
         // Check if asset with random generated ID already exists
         String duplicateAssetJSON = stub.getStringState(duplicateAssetID);
+        int counter = 1;
         while (!(duplicateAssetJSON == null || duplicateAssetJSON.isEmpty())) {
-            duplicateAssetJSON = assetID + "-";
+            duplicateAssetID = assetID + "Copy" + counter;
+            counter++;
         }
 
         Asset duplicateAsset = new Asset(duplicateAssetID, asset.getColor(), asset.getSize(), newOwner, asset.getAppraisedValue());
